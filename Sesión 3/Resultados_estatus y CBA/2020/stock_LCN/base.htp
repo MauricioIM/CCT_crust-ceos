@@ -1,0 +1,219 @@
+#if !defined(_BASE_)
+#  define _BASE_
+
+class model_data : public ad_comm{
+  data_int nanos;
+  data_int nedades;
+  data_number edad_ini;
+  data_number delta_edad;
+  data_int ntallas;
+  data_matrix indices;
+  data_vector Tallas;
+  data_matrix Cl;
+  data_matrix Nlcruceros;
+  data_matrix Wmed;
+  data_vector msex;
+  int reporte_mcmc;
+  data_vector cvar;
+  data_vector nmus;
+  data_int opt_qCru;
+  data_ivector opt_devq;
+  data_int opt_qCPUE;
+  data_ivector opt_devqCPUE;
+  data_int opt_Sel1;
+  data_ivector opt_Sel2;
+  data_int opt_Sel3;
+  data_int opt_Sel4;
+  data_int opt_Sel5;
+  data_vector parbiol;
+  data_int opt_VB1;
+  data_int opt_VB2;
+  data_int opt_VB3;
+  data_int opt_VB4;
+  data_int opt_VB5;
+  data_int opt_Rmed;
+  data_int opt_devR;
+  data_int opt_devNo;
+  data_int opt_F;
+  data_int opt_M;
+  data_int nanos_proy;
+  data_int npbr;
+  data_number pR;
+  data_vector Fpbr;
+  ~model_data();
+  model_data(int argc,char * argv[]);
+  friend class model_parameters;
+};
+
+class model_parameters : public model_data ,
+  public function_minimizer
+{
+public:
+  ~model_parameters();
+  void preliminary_calculations(void);
+  void set_runtime(void);
+  virtual void * mycast(void) {return (void*)this;}
+  static int mc_phase(void)
+  {
+    return initial_params::mc_phase;
+  }
+  static int mceval_phase(void)
+  {
+    return initial_params::mceval_phase;
+  }
+  static int sd_phase(void)
+  {
+    return initial_params::sd_phase;
+  }
+  static int current_phase(void)
+  {
+    return initial_params::current_phase;
+  }
+  static int last_phase(void)
+  {
+    return (initial_params::current_phase
+      >=initial_params::max_number_phases);
+  }
+  static prevariable current_feval(void)
+  {
+    return *objective_function_value::pobjfun;
+  }
+private:
+  ivector integer_control_flags;
+  dvector double_control_flags;
+  param_init_bounded_number log_A50f_one;
+  param_init_bounded_number log_Df_one;
+  param_init_number_vector dev_log_A50f;
+  param_init_number_vector dev_log_Df;
+  param_init_bounded_number log_muf;
+  param_init_bounded_vector log_sf;
+  param_init_bounded_number log_A50cru;
+  param_init_bounded_number log_Dcru;
+  param_init_number log_Rmed;
+  param_init_bounded_vector log_desv_No;
+  param_init_bounded_vector log_desv_Rt;
+  param_init_bounded_vector log_F;
+  param_init_bounded_number log_M;
+  param_init_number log_qCru;
+  param_init_number log_qCPUE;
+  param_init_number_vector devq;
+  param_init_number_vector devqCPUE;
+  param_init_bounded_number log_Lo;
+  param_init_bounded_number log_cva;
+  param_init_bounded_number log_sda;
+  param_init_bounded_vector log_sda2;
+  param_init_bounded_number log_k;
+  param_vector ano;
+  param_vector Desemb;
+  param_vector Bcrucero;
+  param_vector CPUE;
+  param_vector cv1;
+  param_vector cv2;
+  param_vector cv3;
+  param_vector Unos_edad;
+  param_vector Unos_tallas;
+  param_vector Unos_ano;
+  param_vector mu_edad;
+  param_vector sigma_edad;
+  param_vector Bcru;
+  param_vector prior;
+  param_vector Neq;
+  param_vector Neqv;
+  param_vector likeval;
+  param_vector SDo;
+  param_vector edades;
+  param_vector Scru_1;
+  param_vector Scru_2;
+  param_vector log_A50f;
+  param_vector log_Df;
+  param_vector log_A50R2;
+  param_vector log_DR2;
+  param_vector qCru;
+  param_vector qCPUE;
+  param_matrix Sflo;
+  param_matrix Scru;
+  param_matrix F;
+  param_matrix Z;
+  param_matrix S;
+  param_matrix N;
+  param_matrix NM;
+  param_matrix Nv;
+  param_matrix Cedad;
+  param_matrix Prob_talla;
+  param_matrix P1;
+  param_matrix P2;
+  param_matrix P3;
+  param_matrix Cl_pred;
+  param_matrix Nlcruceros_pred;
+  param_matrix pobs;
+  param_matrix ppred;
+  param_matrix pobs_cru;
+  param_matrix ppred_cru;
+  param_number suma1;
+  param_number suma2;
+  param_number suma3;
+  param_number suma4;
+  param_number pStotf;
+  param_number pSf;
+  param_number penalty;
+  param_number Linf;
+  param_number k;
+  param_number cv_edad;
+  param_number sd_edad;
+  param_number Lo;
+  param_number M;
+  param_number Nvplus;
+  param_number Npplus;
+  param_number Yp;
+  param_number factor;
+  param_vector temp0;
+  param_vector temp1;
+  param_number Fx;
+  param_vector Wedad;
+  param_vector Np;
+  param_vector NMp;
+  param_vector Sp;
+  param_vector Fp;
+  param_vector Zp;
+  param_vector Cap;
+  param_matrix YTP;
+  param_matrix Bp;
+  param_vector Nvp;
+  param_vector Sfp;
+  param_vector SDvp;
+  param_stddev_vector CPUE_pred;
+  param_stddev_vector Bcrucero_pred;
+  param_stddev_vector Desemb_pred;
+  param_stddev_vector SD;
+  param_stddev_vector RPR;
+  param_stddev_vector RPR2;
+  param_stddev_vector Reclutas;
+  param_stddev_number Flast;
+  param_stddev_vector CTP;
+  param_stddev_vector RPRp;
+  param_stddev_vector Btot;
+  param_stddev_vector Bv;
+  param_stddev_matrix SDp;
+  param_stddev_number SDo2;
+  param_number prior_function_value;
+  param_number likelihood_function_value;
+  objective_function_value f;
+public:
+  virtual void userfunction(void);
+  virtual void report(const dvector& gradients);
+  virtual void final_calcs(void);
+  model_parameters(int sz,int argc, char * argv[]);
+  virtual void initializationfunction(void);
+  void Eval_selectividad(void);
+  void Eval_mortalidades(void);
+  void Eval_abundancia(void);
+  void Eval_prob_talla_edad(void);
+  void Eval_capturas_predichas(void);
+  void Eval_deinteres(void);
+  void Eval_logverosim(void);
+  void Eval_funcion_objetivo(void);
+  void Eval_CTP(void);
+  void Eval_mcmc(void);
+
+};
+#endif
