@@ -379,15 +379,15 @@
 # FASES DE ESTIMACION 
 
 # Fase de estimacion de capturabilidad flota & crucero
-5 4
+4 4
 # Fase estimación de la selectividad flota & crucero (nota: si la selec. crucero no se estima, se asume = 1)
-6  
+3  
 # Fase de estimacion de Lo & cv & M
--4  4 -4
+-5  5 -5
 # Fase de estimacion mortalidad por pesca
 3 
 # Fase de estimacion dev_Rt y dev_No (dev_No<0 equilibrio)
-2  2
+2  1
 # Fase de estimacion proporcion de machos en el Reclutamiento (pRm)
 -6
 # Fase de estimacion Fpbr (se sugiere sea la ultima)
